@@ -1,0 +1,32 @@
+div.content {
+	margin: auto !important;
+}
+
+/* coloring */
+
+body:not(.rfc-dark-mode-disabled) {
+	color: whitesmoke !important;
+	background-color: #444 !important;
+}
+
+body:not(.rfc-dark-mode-disabled) .docinfo {
+	background-color: #555 !important;
+}
+
+body:not(.rfc-dark-mode-disabled) a {
+	color: cyan !important;
+}
+
+/* transition */
+
+body,
+body a {
+	transition: 
+		color 0.5s ease, 
+		background-color 0.5s ease !important;
+}
+
+body .docinfo {
+	transition:
+		background-color 0.5s ease !important;
+}
