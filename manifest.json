@@ -3,7 +3,7 @@
 	"version": "0.01",
 	"description": "Make RFC documents more readable with dark mode",
 	"permissions": [
-		"activeTab",
+		"webNavigation",
 		"storage",
 		"http://tools.ietf.org/*",
 		"https://tools.ietf.org/*"
@@ -21,23 +21,27 @@
 				"https://tools.ietf.org/*"
 			],
 			"css": [
-				"darkmode.css"
+				"content.css"
+			],
+			"run_at": "document_start",
+			"js": [
+				"content.js"
 			]
 		}
 	],
 	"browser_action": {
 		"default_icon": {
-			"16": "images/boggle16.png",
-			"32": "images/boggle32.png",
-			"48": "images/boggle48.png",
-			"128": "images/boggle128.png"
+			"16": "images/rfc.png",
+			"32": "images/rfc.png",
+			"48": "images/rfc.png",
+			"128": "images/rfc.png"
 		}
 	},
 	"icons": {
-		"16": "images/boggle16.png",
-		"32": "images/boggle32.png",
-		"48": "images/boggle48.png",
-		"128": "images/boggle128.png"
+		"16": "images/rfc.png",
+		"32": "images/rfc.png",
+		"48": "images/rfc.png",
+		"128": "images/rfc.png"
 	},
 	"manifest_version": 2
 }

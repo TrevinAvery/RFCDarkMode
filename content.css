@@ -1,0 +1,42 @@
+div.content {
+	margin: auto !important;
+}
+
+/* coloring */
+
+html.rfc-dark-mode-enabled body {
+	color: whitesmoke !important;
+	background-color: #444 !important;
+}
+
+html.rfc-dark-mode-enabled body .docinfo {
+	background-color: #555 !important;
+}
+
+html.rfc-dark-mode-enabled body a {
+	color: cyan !important;
+}
+
+html.rfc-dark-mode-enabled body span[style="color: #C00;"] {
+	color: orangered !important;
+}
+
+html.rfc-dark-mode-enabled body font {
+	color: whitesmoke !important;
+}
+
+/* transition */
+
+html.rfc-dark-mode-transition body,
+html.rfc-dark-mode-transition body a,
+html.rfc-dark-mode-transition body span[style="color: #C00;"],
+html.rfc-dark-mode-transition body font {
+	transition: 
+		color 0.5s ease, 
+		background-color 0.5s ease !important;
+}
+
+html.rfc-dark-mode-transition body .docinfo {
+	transition:
+		background-color 0.5s ease !important;
+}

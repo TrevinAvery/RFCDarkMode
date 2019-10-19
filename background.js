@@ -2,31 +2,45 @@
 
 chrome.runtime.onInstalled.addListener(function() {
 
+	// store enabled locally so it can be accessed quickly
+	// update it with sync on start up
+	let enabled = false
+	chrome.storage.sync.get('enabled', function(results) {
+		enabled = results.enabled
+		update()
+	})
+
+	// if button is clicked, toggle enabled
 	chrome.browserAction.onClicked.addListener(function(tab) {
-		update(tab, true)
+		chrome.storage.sync.set({'enabled': !enabled})
 	})
 
-	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-		update(tab, false)
-	})
-})
-
-function update(tab, toggle) {
-
-	chrome.storage.sync.get(['disabled'], function(result) {
-		let disabled = result.disabled
-
-		if (toggle) {
-			disabled = !disabled
-			chrome.storage.sync.set({'disabled': disabled})
-		}
-
-		let action = (disabled) ? 'add' : 'remove'
-
-		chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-			chrome.tabs.executeScript(
-				tab.id,
-				{ code: `document.querySelector('body').classList.${action}('rfc-dark-mode-disabled')` })
+	// send current enabled status when new page is loaded
+	chrome.webNavigation.onCommitted.addListener(function(details) {
+		chrome.tabs.sendMessage(details.tabId, {
+			enabled: enabled, 
+			transition: false
 		})
 	})
-}
+
+	// listen for enabled to be changed and update all tabs
+	chrome.storage.onChanged.addListener(function(changes, namespace) {
+		let storageChange = changes['enabled']
+		if (storageChange) {
+			enabled = storageChange.newValue
+			update()
+		}
+	})
+
+	// send current enabled value to all tabs
+	function update() {
+		chrome.tabs.query({}, function(tabs) {
+			for (let tab of tabs) {
+				chrome.tabs.sendMessage(tab.id, {
+					enabled: enabled, 
+					transition: tab.active
+				})
+			}
+		})
+	}
+})
